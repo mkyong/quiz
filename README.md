@@ -1,2 +1,0 @@
-# quiz
-A Quiz system 

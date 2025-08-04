@@ -1,5 +1,6 @@
 package com.mkyong.quiz.controller;
 
+import com.mkyong.quiz.model.Question;
 import com.mkyong.quiz.model.Quiz;
 import com.mkyong.quiz.repository.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/quizzes")
@@ -24,10 +26,33 @@ public class QuizController {
         return quizRepository.findAll();
     }
 
-    /*@GetMapping("/{id}")
-    public Quiz getQuiz(@PathVariable Long id) {
-        return quizRepository.findById(id).orElseThrow();
-    }*/
+    @PutMapping("/{id}")
+    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @RequestBody Quiz quiz) {
+        // 1. Find the quiz by id
+        Optional<Quiz> existingQuizOpt = quizRepository.findById(id);
+        if (existingQuizOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Quiz existingQuiz = existingQuizOpt.get();
+
+        // 2. Update basic fields
+        existingQuiz.setTitle(quiz.getTitle());
+
+        // 3. Handle questions (replace existing questions)
+        existingQuiz.getQuestions().clear();
+        if (quiz.getQuestions() != null) {
+            for (Question q : quiz.getQuestions()) {
+                // Ensure bi-directional link
+                q.setQuiz(existingQuiz);
+                existingQuiz.getQuestions().add(q);
+            }
+        }
+
+        // 4. Save and return
+        Quiz savedQuiz = quizRepository.save(existingQuiz);
+        return ResponseEntity.ok(savedQuiz);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Quiz> getQuiz(@PathVariable Long id) {

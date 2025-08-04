@@ -28,8 +28,8 @@ public class Question {
             joinColumns = @JoinColumn(name = "question_id")
     )
     // fixed to limit 1000
-    @Column(name = "options", length = 1000)
-    // @Column(name = "options", columnDefinition = "TEXT")
+    // @Column(name = "options", length = 1000)
+    @Column(name = "options", columnDefinition = "TEXT")
     private List<String> options;
 
     private int correctOptionIndex;
