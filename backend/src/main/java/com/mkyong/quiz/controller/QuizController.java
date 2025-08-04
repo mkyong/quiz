@@ -37,6 +37,7 @@ public class QuizController {
 
         // 2. Update basic fields
         existingQuiz.setTitle(quiz.getTitle());
+        existingQuiz.setDescription(quiz.getDescription());
 
         // 3. Handle questions (replace existing questions)
         existingQuiz.getQuestions().clear();

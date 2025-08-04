@@ -20,6 +20,8 @@ public class Quiz {
 
     private String title;
 
+    private String description;
+
     // When sending entities directly via REST APIs, infinite loops may occur. Fix this using annotations or DTOs:
     @JsonManagedReference
     // mappedBy = "quiz" indicates Question is responsible for the foreign key

@@ -1,7 +1,8 @@
 -- quiz table
 CREATE TABLE quiz (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(255)
+    title VARCHAR(255),
+    description TEXT
 );
 
 -- question table
