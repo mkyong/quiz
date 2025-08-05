@@ -9,6 +9,7 @@ CREATE TABLE quiz (
 CREATE TABLE question (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     text TEXT,
+    correct_option_explain TEXT,
     correct_option_index INT,
     quiz_id BIGINT, -- foreign key referencing quiz table
     FOREIGN KEY (quiz_id) REFERENCES quiz(id)

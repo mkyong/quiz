@@ -1,0 +1,336 @@
+{
+  "title": "Maven Beginner Quiz",
+  "description": "A set of beginner questions to test your knowledge of Apache Maven fundamentals.",
+  "questions": [
+    {
+      "text": "What is Maven primarily used for?",
+      "correctOptionExplain": "Maven is a tool for project management and build automation, mainly for Java projects.",
+      "options": [
+        "Text editing",
+        "Project management and build automation",
+        "Database management",
+        "Image processing"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "What is the default build lifecycle phase in Maven when you run `mvn install`?",
+      "correctOptionExplain": "The install phase compiles, tests, packages, and then installs the package into the local repository.",
+      "options": [
+        "validate",
+        "compile",
+        "install",
+        "test"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "text": "What is the name of Maven's main configuration file?",
+      "correctOptionExplain": "The `pom.xml` file (Project Object Model) is Maven's core configuration file.",
+      "options": [
+        "build.xml",
+        "pom.xml",
+        "config.json",
+        "settings.gradle"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which tag in `pom.xml` specifies the project's dependencies?",
+      "correctOptionExplain": "All project dependencies are listed under the `<dependencies>` tag.",
+      "options": [
+        "<resources>",
+        "<build>",
+        "<dependencies>",
+        "<modules>"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "text": "Which command compiles the source code of a Maven project?",
+      "correctOptionExplain": "The `mvn compile` command compiles the project's Java source files.",
+      "options": [
+        "mvn deploy",
+        "mvn install",
+        "mvn compile",
+        "mvn clean"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "text": "Where does Maven store downloaded dependencies by default?",
+      "correctOptionExplain": "The local repository for Maven is in the user's home directory under `.m2/repository`.",
+      "options": [
+        "/usr/lib/maven",
+        "~/.m2/repository",
+        "/opt/deps",
+        "/etc/maven"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which of the following is NOT a Maven build lifecycle phase?",
+      "correctOptionExplain": "`run` is not a default Maven phase; the others are standard lifecycle phases.",
+      "options": [
+        "test",
+        "deploy",
+        "run",
+        "clean"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "text": "What does the `mvn clean` command do?",
+      "correctOptionExplain": "`mvn clean` deletes the `target` directory to remove previous build results.",
+      "options": [
+        "Compiles code",
+        "Deletes the target directory",
+        "Downloads dependencies",
+        "Runs tests"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which plugin compiles Java source code in Maven?",
+      "correctOptionExplain": "The `maven-compiler-plugin` is responsible for compiling Java code.",
+      "options": [
+        "maven-compiler-plugin",
+        "maven-surefire-plugin",
+        "maven-jar-plugin",
+        "maven-war-plugin"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "text": "How do you specify a dependency version in `pom.xml`?",
+      "correctOptionExplain": "The `<version>` tag is used to specify the version of a dependency.",
+      "options": [
+        "<dependencyVersion>1.0</dependencyVersion>",
+        "<version>1.0</version>",
+        "<depver>1.0</depver>",
+        "<ver>1.0</ver>"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "What does POM stand for in Maven?",
+      "correctOptionExplain": "POM means Project Object Model.",
+      "options": [
+        "Project Object Model",
+        "Package Object Model",
+        "Programmed Object Model",
+        "Public Object Model"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "text": "What is the default packaging type in Maven?",
+      "correctOptionExplain": "If not specified, Maven assumes the packaging type is `jar`.",
+      "options": [
+        "war",
+        "jar",
+        "pom",
+        "ear"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which Maven goal runs unit tests?",
+      "correctOptionExplain": "The test goal runs the unit tests.",
+      "options": [
+        "test",
+        "run",
+        "verify",
+        "package"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "text": "What is a Maven artifact?",
+      "correctOptionExplain": "An artifact is a packaged output like a JAR, WAR, or EAR.",
+      "options": [
+        "A JavaScript file",
+        "A build output, like a JAR or WAR file",
+        "An IDE configuration",
+        "An image"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "What does the `<groupId>` tag represent?",
+      "correctOptionExplain": " `<groupId>` identifies the group or organization behind the project.",
+      "options": [
+        "The artifact's version",
+        "The plugin used",
+        "The project's unique base identifier (often a reversed domain name)",
+        "The Java package"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "text": "What does `mvn package` do?",
+      "correctOptionExplain": "The `package` phase bundles compiled code as a JAR or WAR.",
+      "options": [
+        "Downloads dependencies",
+        "Packages the compiled code into a distributable format, like a JAR",
+        "Runs integration tests",
+        "Deploys the application"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which directory contains Java source files by Maven convention?",
+      "correctOptionExplain": "Java source files go in `src/main/java`.",
+      "options": [
+        "src/bin",
+        "src/main/java",
+        "src/source/java",
+        "main/java"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which file does Maven use to manage project dependencies?",
+      "correctOptionExplain": "`pom.xml` manages dependencies.",
+      "options": [
+        "dependencies.xml",
+        "build.gradle",
+        "pom.xml",
+        "settings.xml"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "text": "What is the purpose of the `<scope>` tag in a dependency?",
+      "correctOptionExplain": "`<scope>` defines how and when to use a dependency.",
+      "options": [
+        "Sets the license",
+        "Specifies when a dependency is available (e.g., compile, test)",
+        "Sets the group",
+        "Specifies Java version"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "What is the parent tag used for in pom.xml?",
+      "correctOptionExplain": "`<parent>` lets a project inherit from another POM, usually for shared settings.",
+      "options": [
+        "Importing JDK",
+        "Specifying a parent POM to inherit configuration from",
+        "Defining the main class",
+        "Marking the root element"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which command would update all project dependencies to their latest version?",
+      "correctOptionExplain": "The `versions:use-latest-versions` goal updates dependencies to their latest versions.",
+      "options": [
+        "mvn update",
+        "mvn versions:use-latest-versions",
+        "mvn refresh",
+        "mvn latest"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which tag specifies the artifact type (jar, war, pom, etc.)?",
+      "correctOptionExplain": "`<packaging>` specifies the artifact type.",
+      "options": [
+        "<type>",
+        "<scope>",
+        "<packaging>",
+        "<category>"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "text": "What happens if you run `mvn test` but have no test files?",
+      "correctOptionExplain": "Maven will skip the test phase if no tests are found.",
+      "options": [
+        "Error thrown",
+        "Maven completes successfully, skipping tests",
+        "Project is deleted",
+        "Build fails"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which command will remove all generated files from previous builds?",
+      "correctOptionExplain": "`mvn clean` removes the target directory and build artifacts.",
+      "options": [
+        "mvn delete",
+        "mvn remove",
+        "mvn clean",
+        "mvn reset"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "text": "How do you specify a plugin in Maven?",
+      "correctOptionExplain": "Plugins are listed under `<build><plugins>`.",
+      "options": [
+        "Under <plugins> in the <build> section",
+        "In the <dependencies> section",
+        "As a command-line argument",
+        "In the <resources> section"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "text": "How can you skip tests during the build?",
+      "correctOptionExplain": "`-DskipTests` skips running tests during the build.",
+      "options": [
+        "mvn install -skipTests",
+        "mvn install -DskipTests",
+        "mvn install --notest",
+        "mvn install /skipTests"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which is the correct order of Maven lifecycles?",
+      "correctOptionExplain": "The main lifecycles are: clean, default (build), and site.",
+      "options": [
+        "clean, default, site",
+        "install, package, deploy",
+        "compile, clean, site",
+        "build, install, site"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "text": "What does the `<artifactId>` tag represent?",
+      "correctOptionExplain": "`<artifactId>` is the unique name for the project within the group.",
+      "options": [
+        "The project's version",
+        "The output file name",
+        "The unique name for this project in the group",
+        "The packaging type"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "text": "What is the command to generate a new Maven project?",
+      "correctOptionExplain": "Use `mvn archetype:generate` to scaffold a new Maven project.",
+      "options": [
+        "mvn new",
+        "mvn archetype:generate",
+        "mvn create",
+        "mvn init"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "text": "Which file can be used to configure user-specific Maven settings?",
+      "correctOptionExplain": "`settings.xml` in the Maven conf directory or `~/.m2/` folder configures user-specific Maven settings.",
+      "options": [
+        "pom.xml",
+        "settings.xml",
+        "config.xml",
+        "maven.xml"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

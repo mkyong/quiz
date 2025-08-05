@@ -1,7 +1,7 @@
 import React from "react";
 import QuestionEditor from "./QuestionEditor";
 
-const emptyQuestion = { text: "", options: ["", ""], correctOptionIndex: 0 };
+const emptyQuestion = { text: "", options: ["", "", "", ""], correctOptionExplain: "", correctOptionIndex: 0 };
 
 function QuizForm({ quiz, setQuiz, onSubmit, onCancel }) {
     const handleQuizChange = (e) => setQuiz({ ...quiz, [e.target.name]: e.target.value });
@@ -47,12 +47,13 @@ function QuizForm({ quiz, setQuiz, onSubmit, onCancel }) {
                 </div>
                 <div className="space-y-4">
                     {quiz.questions.map((q, i) => (
-                        <QuestionEditor key={i} question={q} setQuestion={updatedQ => handleQuestionUpdate(i, updatedQ)} onRemove={() => handleRemoveQuestion(i)} />
+                        <QuestionEditor key={i} number={i + 1} question={q} setQuestion={updatedQ => handleQuestionUpdate(i, updatedQ)} onRemove={() => handleRemoveQuestion(i)} />
                     ))}
                 </div>
             </div>
             <div className="mt-8 flex gap-3 justify-end">
                 <button type="submit" className="bg-green-600 dark:bg-green-700 hover:bg-green-700 text-white dark:text-neutral-100 font-semibold px-6 py-2 rounded-xl shadow transition">Save</button>
+                <button type="button" className="bg-blue-500 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-700 text-white dark:text-neutral-100 font-semibold px-6 py-2 rounded-xl shadow transition" onClick={handleAddQuestion}>+ Add Question</button>
                 <button type="button" className="bg-neutral-300 dark:bg-neutral-800 hover:bg-neutral-400 text-neutral-700 dark:text-neutral-100 font-semibold px-6 py-2 rounded-xl" onClick={onCancel}>Cancel</button>
             </div>
         </form>

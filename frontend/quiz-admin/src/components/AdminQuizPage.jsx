@@ -53,7 +53,11 @@ function AdminQuizPage() {
 
       <div className="w-full max-w-screen-lg mx-auto">
         <header className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-extrabold tracking-tight text-neutral-800 dark:text-neutral-100">Quiz Admin</h1>
+          
+          <a href="/" className="text-3xl font-extrabold tracking-tight text-neutral-800 dark:text-neutral-100 focus:outline-none">
+            Quiz Admin
+          </a>
+
           <ThemeToggle />
           {!showForm && (
             <button

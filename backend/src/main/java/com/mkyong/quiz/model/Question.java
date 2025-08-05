@@ -22,6 +22,9 @@ public class Question {
     @Column(columnDefinition = "TEXT")
     private String text;
 
+    @Column(columnDefinition = "TEXT")
+    private String correctOptionExplain;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "question_options",
