@@ -21,3 +21,16 @@ CREATE TABLE question_options (
     options TEXT, -- supports very long strings
     FOREIGN KEY (question_id) REFERENCES question(id)
 );
+
+CREATE TABLE quiz_result (
+    id SERIAL PRIMARY KEY,
+    user_ip VARCHAR(45),
+    quiz_json TEXT,
+    user_answers_json TEXT,
+    correct_answers_json TEXT,
+    score INT,
+    total_questions INT,
+    share_code VARCHAR(64) UNIQUE,
+    created_date_time TIMESTAMP
+);
+

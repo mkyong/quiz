@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .quiz-layout{
+    @apply w-full max-w-screen-lg mx-auto;
+  }
+  /* Page/app background */
+  .quiz-bg {
+    @apply bg-neutral-50 dark:bg-neutral-900;
+  }
+  /* Title/headline text */
+  .quiz-title {
+    @apply text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100;
+  }
+  /* Normal body text */
+  .quiz-text {
+    @apply text-base text-neutral-800 dark:text-neutral-100;
+  }
+  /* General box/panel/card container */
+  .quiz-box {
+    @apply bg-white dark:bg-neutral-800 rounded-xl shadow-sm
+      border border-neutral-200 dark:border-neutral-700 p-4;
+  }
+  .quiz-flex {
+    @apply flex justify-between items-center
+  }
+  /* Subtle muted text, for description/hints/etc */
+  .quiz-muted {
+    @apply text-sm text-neutral-500 dark:text-neutral-400;
+  }
+
+  /* INPUT & TEXTAREA (form fields) */
+  .quiz-input {
+    @apply w-full rounded-xl border border-neutral-300 dark:border-neutral-700
+      bg-neutral-100 dark:bg-neutral-800
+      text-neutral-900 dark:text-neutral-100
+      placeholder-neutral-400 dark:placeholder-neutral-500
+      focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
+      px-3 py-2 transition;
+  }
+  .quiz-textarea {
+    @apply quiz-input min-h-[100px] resize-y font-mono;
+  }
+
+  /* BUTTONS */
+  .quiz-btn {
+    @apply rounded-xl px-4 py-2 font-semibold transition
+      focus:outline-none focus:ring-2 focus:ring-blue-500;
+  }
+  .quiz-btn-primary {
+    @apply quiz-btn bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600;
+  }
+  .quiz-btn-success {
+    @apply quiz-btn bg-green-600 text-white hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600;
+  }
+  .quiz-btn-neutral {
+    @apply quiz-btn bg-neutral-300 text-neutral-900 hover:bg-neutral-400 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700;
+  }
+  .quiz-btn-danger {
+    @apply quiz-btn bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600;
+  }
+
+  /* RADIO BUTTON (wrapping label for custom appearance) */
+  .quiz-radio-label {
+    @apply flex items-center gap-2 cursor-pointer rounded px-3 py-2
+      border border-neutral-300 dark:border-neutral-700
+      transition
+      hover:bg-blue-50 dark:hover:bg-blue-900;
+  }
+  .quiz-radio-input {
+    @apply accent-blue-600 dark:accent-blue-400;
+  }
+
+  /* CHECKBOX (same as radio for style) */
+  .quiz-checkbox-input {
+    @apply accent-blue-600 dark:accent-blue-400;
+  }
+
+  /* ===== ALERT & FEEDBACK STYLES ===== */
+
+  /* Error Box */
+  .quiz-error-box {
+    @apply quiz-box border border-red-600 bg-red-50 text-red-800
+      dark:border-red-500 dark:bg-red-950 dark:text-red-200;
+  }
+  .quiz-error-text {
+    @apply text-red-700 dark:text-red-300 font-semibold;
+  }
+
+  /* Warning Box */
+  .quiz-warning-box {
+    @apply quiz-box border-l-4 border-yellow-500 bg-yellow-50 text-yellow-900
+      dark:border-yellow-400 dark:bg-yellow-950 dark:text-yellow-100;
+  }
+  .quiz-warning-text {
+    @apply text-yellow-800 dark:text-yellow-200 font-semibold;
+  }
+
+  /* Feedback Box (success/info) */
+  .quiz-feedback-box {
+    @apply quiz-box border-l-4 border-green-600 bg-green-50 text-green-900
+      dark:border-green-500 dark:bg-green-950 dark:text-green-100;
+  }
+  .quiz-feedback-text {
+    @apply text-green-800 dark:text-green-200 font-semibold;
+  }
+}

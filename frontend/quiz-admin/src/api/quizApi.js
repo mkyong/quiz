@@ -13,3 +13,9 @@ export async function updateQuiz(id, quiz) {
 export async function deleteQuiz(id) {
   return axios.delete(`/api/quizzes/${id}`);
 }
+
+export async function submitQuizResult(result) {
+  // result = { quizJson, userAnswersJson, score, totalQuestions, correctAnswersJson }
+  const res = await axios.post("/api/quiz-results", result);
+  return res.data; // backend should return the saved result (including shareCode)
+}

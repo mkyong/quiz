@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import ThemeToggle from "../ToggleTheme";
-import QuizScoreChart from "./QuizScoreChart";
 import AnswerReview from "./AnswerReview";
+import QuizFeedback from "./QuizFeedback";
+import ShareResult from "./QuizShareResult";
 
-export default function QuizResult({ quiz, answers, onBack }) {
+export default function QuizResult({ quiz, answers, shareCode, onBack }) {
+
   const [showReview, setShowReview] = useState(false);
+  
+  const shareUrl = shareCode
+    ? `${window.location.origin}/quiz/result/${shareCode}`
+    : null;
 
   const correctCount = answers.reduce(
     (s, a, i) => (a === quiz.questions[i].correctOptionIndex ? s + 1 : s),
     0
   );
-  const percent = ((correctCount / quiz.questions.length) * 100).toFixed(1);
+  
+  const percent = Math.round((correctCount / quiz.questions.length) * 100);
 
   return (
     <div className="min-h-screen bg-white dark:bg-black py-10 px-4">
@@ -25,28 +32,27 @@ export default function QuizResult({ quiz, answers, onBack }) {
           </button>
           <ThemeToggle />
         </header>
-        <h2 className="text-2xl font-bold mb-2 dark:text-neutral-100">
-          Quiz Completed
+        <h2 className="text-2xl font-bold mb-8 dark:text-neutral-100">
+          {quiz.title} Results
         </h2>
         <div className="mb-6 w-full">
-            <div className="flex flex-col items-start gap-2 text-lg bg-neutral-100 dark:bg-neutral-900 rounded-xl p-4 shadow-sm border border-neutral-200 dark:border-neutral-700">
-                <span>
-                <span className="font-semibold text-green-700 dark:text-green-400 text-xl">
-                    {correctCount}
-                </span>{" "}
-                <span className="text-neutral-700 dark:text-neutral-200">/ {quiz.questions.length} correct</span>
+            <div className="flex flex-col items-start gap-2 text-lg 
+              bg-neutral-100 dark:bg-neutral-900 rounded-xl p-4 shadow-sm border 
+              border-neutral-200 dark:border-neutral-700">
+                <span className="text-neutral-700 dark:text-neutral-200 text-sm">
+                  Correct: {correctCount} of {quiz.questions.length}
                 </span>
-                <span>
-                <span className="text-neutral-700 dark:text-neutral-200">Score: </span>
-                <span className="font-semibold text-blue-700 dark:text-blue-300 text-xl">
-                    {percent}%
+
+                <span className="text-neutral-700 dark:text-neutral-200 text-2xl">
+                  Score: {percent}%
                 </span>
-                </span>
+                
+                <QuizFeedback percent={percent} />
             </div>
         </div>
 
-        <QuizScoreChart quiz={quiz} answers={answers} />
-
+        <ShareResult shareUrl={shareUrl} />
+        
         <button
           className={`mt-4 px-6 py-2 rounded-xl font-semibold w-full transition ${
             showReview

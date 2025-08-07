@@ -13,20 +13,15 @@ export default function AnswerReview({ quiz, answers }) {
           className="bg-neutral-50 dark:bg-neutral-800 rounded-2xl p-5 shadow flex flex-col gap-2"
         >
           <div className="font-semibold text-base dark:text-neutral-100 mb-1">
-            Q{i + 1}: <MarkdownRenderer>{q.text}</MarkdownRenderer>
+            Question {i + 1}: <MarkdownRenderer>{q.text}</MarkdownRenderer>
           </div>
           <div className="space-y-2 mb-1">
 
             {q.options.map((opt, oi) => {
-              // const isCorrect = q.correctOptionIndex === oi;
-              // const isUser = answers[i] === oi;
-
+              
               const isCorrect = q.correctOptionIndex === oi;
               const isUser = answers[i] === oi && typeof answers[i] === "number";
-
-              console.log("answers", answers);
-              console.log("quiz", quiz);
-            
+   
               return (
 
                 <div

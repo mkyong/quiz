@@ -4,6 +4,7 @@ import MarkdownRenderer from "./MarkdownRenderer";
 import QuizResult from "./result/QuizResult";
 import WarningMessage from "./WarningMessage";
 import ConfirmModal from "./ConfirmModal";
+import { submitQuizResult } from "../api/quizApi";
 
 export default function QuizRunner({ quiz, onBack }) {
 
@@ -15,9 +16,45 @@ export default function QuizRunner({ quiz, onBack }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const currentQuestion = quiz.questions[page];
 
-  if (submitted) {
-    return <QuizResult quiz={quiz} answers={answers} onBack={onBack} />;
+  const [submittedResult, setSubmittedResult] = useState(null);
+
+  const handleFinalSubmit = async () => {
+    const quizJson = JSON.stringify(quiz);
+    const userAnswersJson = JSON.stringify(answers);
+    const correctAnswersJson = JSON.stringify(quiz.questions.map(q => q.correctOptionIndex));
+    const score = answers.reduce((s, a, i) => a === quiz.questions[i].correctOptionIndex ? s + 1 : s, 0);
+
+    const payload = {
+      quizJson,
+      userAnswersJson,
+      score,
+      totalQuestions: quiz.questions.length,
+      correctAnswersJson,
+    };
+
+    try {
+      const result = await submitQuizResult(payload); // { shareCode: "abc", ... }
+      setSubmittedResult({ quiz, answers, shareCode: result.shareCode });
+    } catch (e) {
+      alert("Failed to submit result!");
+    }
+  };
+  
+  // Render
+  if (submittedResult){
+    return (
+      <QuizResult
+        quiz={submittedResult.quiz}
+        answers={submittedResult.answers}
+        shareCode={submittedResult.shareCode}
+        onBack={onBack}
+      />
+    );
   }
+
+  //if (submitted) {
+  //  return <QuizResult quiz={quiz} answers={answers} onBack={onBack} />;
+  //}
 
   return (
     <div className="min-h-screen bg-white dark:bg-black py-10 px-4">
@@ -129,6 +166,7 @@ export default function QuizRunner({ quiz, onBack }) {
               onConfirm={() => {
                 setConfirmOpen(false);
                 setSubmitted(true);
+                handleFinalSubmit();
               }}
               onCancel={() => setConfirmOpen(false)}
             />
