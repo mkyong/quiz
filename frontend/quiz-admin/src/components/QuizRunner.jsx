@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import ThemeToggle from "./ToggleTheme";
 import MarkdownRenderer from "./MarkdownRenderer";
 import QuizResult from "./result/QuizResult";
-import WarningMessage from "./WarningMessage";
+import WarningMessage from "./WarningBox";
 import ConfirmModal from "./ConfirmModal";
 import { submitQuizResult } from "../api/quizApi";
 
@@ -10,13 +10,16 @@ export default function QuizRunner({ quiz, onBack }) {
 
   const [answers, setAnswers] = useState(Array(quiz.questions.length).fill(null));
   const [page, setPage] = useState(0);
-  const [submitted, setSubmitted] = useState(false);
   const [showSelectMsg, setShowSelectMsg] = useState(false);
   const shakeRef = useRef();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const currentQuestion = quiz.questions[page];
 
   const [submittedResult, setSubmittedResult] = useState(null);
+
+  useEffect(() => {
+    setShowSelectMsg(false);
+  }, [page]);
 
   const handleFinalSubmit = async () => {
     const quizJson = JSON.stringify(quiz);
@@ -52,25 +55,21 @@ export default function QuizRunner({ quiz, onBack }) {
     );
   }
 
-  //if (submitted) {
-  //  return <QuizResult quiz={quiz} answers={answers} onBack={onBack} />;
-  //}
-
   return (
-    <div className="min-h-screen bg-white dark:bg-black py-10 px-4">
-      <div className="w-full max-w-screen-lg mx-auto">
-        <header className="flex items-center justify-between mb-8">
-          <button onClick={onBack} className="text-blue-700 dark:text-blue-400 hover:underline">&larr; Back</button>
+    <div className="min-h-screen quiz-bg quiz-text py-10 px-4">
+      <div className="quiz-layout">
+        <header className="quiz-flex mb-8">
+          <button onClick={onBack} className="quiz-btn-primary">&larr; Back To Quiz Selection</button>
           <ThemeToggle />
         </header>
-        <div className="mb-3 text-sm text-neutral-500 dark:text-neutral-400">
-          Quiz: <b className="text-neutral-900 dark:text-neutral-100">{quiz.title}</b>
+        <div className="mb-3 quiz-muted">
+          <b>Quiz: {quiz.title}</b>
         </div>
         <div className="mb-4">
-          <div className="flex items-center justify-between">
-            <span className="font-semibold dark:text-neutral-100">Question {page + 1} of {quiz.questions.length}</span>
+          <div className="quiz-flex">
+            <span className="font-semibold text-xl">Question {page + 1} of {quiz.questions.length}</span>
           </div>
-          <div className="mt-4 mb-4 bg-neutral-100 dark:bg-neutral-800 p-4 rounded-xl min-h-[120px] dark:text-neutral-100 font-semibold">
+          <div className="mt-4 mb-4 quiz-box p-4 rounded-xl min-h-[120px] font-semibold">
             <MarkdownRenderer>{currentQuestion.text}</MarkdownRenderer>
           </div>
 
@@ -82,10 +81,10 @@ export default function QuizRunner({ quiz, onBack }) {
           {currentQuestion.options.map((opt, i) => (
             <label
               key={i}
-              className={`flex items-center gap-2 p-2 rounded cursor-pointer border ${
+              className={`quiz-option  ${
                 answers[page] === i
-                  ? "border-blue-600 dark:border-blue-400 bg-blue-50 dark:bg-blue-900"
-                  : "border-neutral-300 dark:border-neutral-700"
+                  ? "quiz-option-selected"
+                  : "quiz-option-default"
               }`}
             >
               <input
@@ -99,10 +98,10 @@ export default function QuizRunner({ quiz, onBack }) {
                   });
                   setShowSelectMsg(false); // Hide the warning as soon as an answer is picked
                 }}
-                className="accent-blue-600 dark:accent-blue-400"
+                className="quiz-radio-input"
               />
-              <span className="w-4 text-neutral-700 dark:text-neutral-200">{String.fromCharCode(65 + i)}.</span>
-              <span className="w-full text-neutral-900 dark:text-neutral-100">
+              <span className="quiz-option-letter">{String.fromCharCode(65 + i)}.</span>
+              <span className="quiz-option-text">
                 <MarkdownRenderer>{opt}</MarkdownRenderer>
               </span>
             </label>
@@ -110,12 +109,15 @@ export default function QuizRunner({ quiz, onBack }) {
         </div>
 
         </div>
-        <div className="flex justify-between items-center mt-8">
-          <button className="bg-neutral-200 dark:bg-neutral-700 px-4 py-2 rounded-xl text-neutral-700 dark:text-neutral-100 font-semibold"
-            onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}>Previous</button>
+        <div className="quiz-flex mt-8">
+          <button className="quiz-btn quiz-btn-neutral"
+            onClick={() => {
+              setShowSelectMsg(false);
+              setPage(p => Math.max(0, p - 1))
+            }} disabled={page === 0}>Previous</button>
           {page < quiz.questions.length - 1 ? (
             <button
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl font-semibold"
+              className="quiz-btn quiz-btn-primary"
               onClick={() => {
                 if (answers[page] == null) {
                   setShowSelectMsg(true);
@@ -138,7 +140,7 @@ export default function QuizRunner({ quiz, onBack }) {
               Next
             </button>
           ) : (
-            <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-xl font-semibold"
+            <button className="quiz-btn quiz-btn-success"
               onClick={() => {
                 if (answers.some(a => a == null)) {
                   setShowSelectMsg(true);
@@ -161,11 +163,11 @@ export default function QuizRunner({ quiz, onBack }) {
               open={confirmOpen}
               title="Submit Quiz?"
               message="Are you sure you want to submit all your answers? This action cannot be undone."
-              confirmText="Submit"
+              confirmText="Confirm"
               cancelText="Cancel"
               onConfirm={() => {
                 setConfirmOpen(false);
-                setSubmitted(true);
+//                setSubmitted(true);
                 handleFinalSubmit();
               }}
               onCancel={() => setConfirmOpen(false)}

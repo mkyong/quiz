@@ -1,9 +1,9 @@
 const feedbackMessages = [
-  "Needs significant improvement. Consider reviewing the foundational concepts and trying again.",
-  "Below expectations. A bit more study and practice will help you achieve better results.",
-  "Fair effort. You have grasped some concepts but there is room for improvement.",
-  "Good performance. You have a solid understanding, but there are still areas to strengthen.",
-  "Excellent work! You have demonstrated strong mastery of the material."
+  "Don't be discouraged—everyone starts somewhere! Review the basics and give it another shot. You're making progress just by trying.",
+  "You're on the right track! A bit more review and practice will help boost your confidence and results. Keep going!",
+  "Nice effort! You've picked up some key ideas. With a little more practice, you'll get even stronger.",
+  "Great work! You have a good understanding of the material. A little fine-tuning and you'll master it.",
+  "Outstanding! You've really shown your mastery of these concepts. Congratulations on your excellent work!"
 ];
 
 function getFeedback(percent) {
@@ -16,7 +16,7 @@ function getFeedback(percent) {
 
 export default function QuizFeedback({ percent }) {
   return (
-    <div className="text-neutral-700 dark:text-neutral-200 text-md">
+    <div>
       {getFeedback(percent)}
     </div>
   );

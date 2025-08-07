@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ThemeToggle from "../ToggleTheme";
-import AnswerReview from "./AnswerReview";
+import QuizAnswerReview from "./QuizAnswerReview";
 import QuizFeedback from "./QuizFeedback";
-import ShareResult from "./QuizShareResult";
+import QuizResultShare from "./QuizResultShare";
 
 export default function QuizResult({ quiz, answers, shareCode, onBack }) {
 
@@ -20,54 +20,51 @@ export default function QuizResult({ quiz, answers, shareCode, onBack }) {
   const percent = Math.round((correctCount / quiz.questions.length) * 100);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black py-10 px-4">
-      <div className="w-full max-w-screen-lg mx-auto">
-        <header className="flex items-center justify-between mb-8">
+    <div className="min-h-screen quiz-bg quiz-text py-10 px-4">
+      <div className="quiz-layout">
+        <header className="quiz-flex">
           <button
             onClick={onBack}
-            className="text-blue-700 dark:text-blue-400 hover:underline focus:outline-none"
+            className="quiz-btn-neutral mb-10"
             aria-label="Back to quiz"
           >
-            &larr; Back
+            &larr; Back To Quiz Selection
           </button>
           <ThemeToggle />
         </header>
-        <h2 className="text-2xl font-bold mb-8 dark:text-neutral-100">
+        <h2 className="quiz-title mb-8">
           {quiz.title} Results
         </h2>
-        <div className="mb-6 w-full">
-            <div className="flex flex-col items-start gap-2 text-lg 
-              bg-neutral-100 dark:bg-neutral-900 rounded-xl p-4 shadow-sm border 
-              border-neutral-200 dark:border-neutral-700">
-                <span className="text-neutral-700 dark:text-neutral-200 text-sm">
-                  Correct: {correctCount} of {quiz.questions.length}
-                </span>
-
-                <span className="text-neutral-700 dark:text-neutral-200 text-2xl">
-                  Score: {percent}%
-                </span>
-                
-                <QuizFeedback percent={percent} />
+        
+        <div className="quiz-box mb-4">
+            <div className="">
+              Correct: {correctCount} of {quiz.questions.length}
             </div>
-        </div>
 
-        <ShareResult shareUrl={shareUrl} />
+            <div className="quiz-title text-4xl pt-4 pb-4">
+              Score: {percent}%
+            </div>
+            
+            <QuizFeedback percent={percent} />
+        </div>
+        
+        <QuizResultShare shareUrl={shareUrl} />
         
         <button
           className={`mt-4 px-6 py-2 rounded-xl font-semibold w-full transition ${
             showReview
-              ? "bg-neutral-300 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-100"
-              : "bg-blue-600 hover:bg-blue-700 text-white"
+              ? "quiz-btn-primary"
+              : "quiz-btn-primary"
           }`}
           onClick={() => setShowReview((prev) => !prev)}
         >
           {showReview ? "Hide Answers & Explanation" : "Reveal Answers & Explanation"}
         </button>
 
-        {showReview && <AnswerReview quiz={quiz} answers={answers} />}
+        {showReview && <QuizAnswerReview quiz={quiz} answers={answers} />}
 
         <button
-          className="mt-10 w-full bg-neutral-300 dark:bg-neutral-700 rounded-xl py-2 text-neutral-800 dark:text-neutral-100 font-semibold"
+          className="mt-10 w-full quiz-btn-neutral"
           onClick={onBack}
         >
           Back to Quiz List

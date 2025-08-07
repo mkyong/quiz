@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AdminQuizPage from "./components/AdminQuizPage";
-import QuizUserPage from "./components/QuizUserPage";
+import QuizListingPage from "./components/QuizListingPage";
 import LoginPage from "./components/LoginPage";
 import PublicQuizResultPage from "./components/result/PublicQuizResultPage";
 import { AuthProvider, useAuth } from "./auth/AuthContext";
+import NotFoundPage from "./components/NotFoundPage";
 
 import './styles/utilities.css';
 
@@ -26,8 +27,8 @@ function App() {
 
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<Navigate to="/quiz" />} />
-          <Route path="/quiz" element={<QuizUserPage />} />
-          <Route path="*" element={<div className="p-8 text-center text-2xl">404 Not Found</div>} />
+          <Route path="/quiz" element={<QuizListingPage />} />
+          <Route path="*" element={<NotFoundPage />} />
           
           {/* Public result page */}
           <Route path="/quiz/result/:shareCode" element={<PublicQuizResultPage />} />

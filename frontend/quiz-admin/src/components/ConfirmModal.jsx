@@ -53,27 +53,28 @@ export default function ConfirmModal({
     >
       <div
         ref={modalRef}
-        className="animate-modal-in bg-white dark:bg-neutral-900 rounded-2xl shadow-xl p-8 max-w-sm w-full outline-none"
+        className="animate-modal-in quiz-bg rounded-2xl shadow-xl p-8 max-w-sm w-full outline-none"
         role="document"
         aria-labelledby="modal-title"
         aria-describedby="modal-desc"
         onClick={e => e.stopPropagation()} // Prevent click-inside from closing
       >
-        <div id="modal-title" className="mb-4 text-lg font-bold text-neutral-800 dark:text-neutral-100">
+        <div
+         className="mb-4 text-lg font-bold quiz-title">
           {title}
         </div>
-        <div id="modal-desc" className="mb-6 text-neutral-700 dark:text-neutral-200">
+        <div id="modal-desc" className="mb-6 quiz-text">
           {message}
         </div>
-        <div className="flex justify-end gap-4">
+        <div className="quiz-flex justify-end gap-4">
           <button
-            className="bg-neutral-200 dark:bg-neutral-800 px-5 py-2 rounded-xl text-neutral-900 dark:text-neutral-100 font-semibold"
+            className="quiz-btn quiz-btn-neutral"
             onClick={onCancel}
           >
             {cancelText}
           </button>
           <button
-            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl font-semibold"
+            className="quiz-btn quiz-btn-success"
             onClick={onConfirm}
           >
             {confirmText}
