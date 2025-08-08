@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Facebook, Twitter, Linkedin, MessageSquare, Copy, Check } from "lucide-react";
-import { FaFacebook, FaXTwitter, FaLinkedin, FaWhatsapp } from "react-icons/fa6";
+import { FaFacebook, FaXTwitter, FaLinkedin, FaWhatsapp, FaCopy, FaCheck, FaRotateLeft } from "react-icons/fa6";
 
 const shareText = encodeURIComponent("Check out my quiz result!");
 
@@ -27,15 +26,63 @@ function getShareLinks(shareUrl) {
     {
       name: "WhatsApp",
       url: `https://wa.me/?text=${encodeURIComponent("Check out my quiz result: " + shareUrl)}`,
-      icon: <MessageSquare className="w-5 h-5" />,
+      icon: <FaWhatsapp className="w-5 h-5" />,
       color: "bg-emerald-500 hover:bg-emerald-600 text-white",
     },
   ];
 }
 
-export default function QuizShareResult({ shareUrl }) {
+/**
+ * New props:
+ * - loading: boolean (show skeleton while generating share link)
+ * - error: string (optional error from saving)
+ * - onRetry: function (retry handler if saving failed)
+ */
+export default function QuizShareResult({ shareUrl, loading = false, error = "", onRetry }) {
+  
   const [copied, setCopied] = useState(false);
-  if (!shareUrl) return null;
+
+  // 1) While generating link: skeleton (works for slow/hanging server)
+  if (loading) {
+    return (
+      <div className="quiz-box">
+        <div className="font-bold mb-2">Share your result</div>
+        <div className="animate-pulse">
+          <div className="h-10 rounded-xl bg-neutral-200 dark:bg-neutral-700 mb-4" />
+          <div className="flex gap-2">
+            <div className="h-9 w-24 rounded bg-neutral-200 dark:bg-neutral-700" />
+            <div className="h-9 w-24 rounded bg-neutral-200 dark:bg-neutral-700" />
+            <div className="h-9 w-24 rounded bg-neutral-200 dark:bg-neutral-700" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 2) If no link yet AND not loading → show error/empty state + Retry (stays visible even when backend is DOWN)
+  if (!shareUrl) {
+    return (
+      <div className="quiz-box">
+        <div className="font-bold mb-2">Share your result</div>
+        <div className={`text-sm ${error ? "text-red-600 dark:text-red-300" : "text-neutral-600 dark:text-neutral-300"}`}>
+          {error || "Share link is not available yet."}
+        </div>
+        {onRetry && (
+          <button
+            className="mt-3 inline-flex items-center gap-2 quiz-btn-neutral"
+            onClick={onRetry}
+            title="Retry generating link"
+          >
+            <FaRotateLeft className="w-4 h-4" />
+            Retry
+          </button>
+        )}
+      </div>
+    );
+  }
+  
+  // Nothing to show if no URL and not loading (e.g., sharing disabled)
+  //if (!shareUrl) return null;
 
   const shareLinks = getShareLinks(shareUrl);
 
@@ -46,19 +93,13 @@ export default function QuizShareResult({ shareUrl }) {
   };
 
   return (
-    <div className="quiz-box">
-      <div className="font-bold mb-2">
-        Share your result
-      </div>
+    <div className="quiz-box relative">
+      <div className="font-bold mb-2">Share your result</div>
       <input
         type="text"
         value={shareUrl}
         readOnly
-        className="
-          w-full rounded-xl px-3 py-2 mb-4
-          quiz-input
-          font-mono transition
-        "
+        className="w-full rounded-xl px-3 py-2 mb-4 quiz-input font-mono transition"
         onFocus={e => e.target.select()}
       />
 
@@ -70,11 +111,7 @@ export default function QuizShareResult({ shareUrl }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Share on ${link.name}`}
-            className={`
-              flex items-center gap-2 rounded px-2 py-2 font-semibold transition
-              shadow-sm
-              ${link.color}
-            `}
+            className={`flex items-center gap-2 rounded px-2 py-2 font-semibold transition shadow-sm ${link.color}`}
             title={`Share on ${link.name}`}
           >
             {link.icon}
@@ -89,7 +126,7 @@ export default function QuizShareResult({ shareUrl }) {
           title="Copy link"
           onClick={handleCopy}
         >
-          <Copy className="w-5 h-5" />
+          <FaCopy className="w-5 h-5" />
         </button>
       </div>
 
@@ -106,7 +143,7 @@ export default function QuizShareResult({ shareUrl }) {
           role="status"
           aria-live="polite"
         >
-          <Check className="w-4 h-4" />
+          <FaCheck className="w-4 h-4" />
           Link copied!
         </div>
       )}

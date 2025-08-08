@@ -5,10 +5,17 @@ import QuizResult from "./result/QuizResult";
 import WarningMessage from "./WarningBox";
 import ConfirmModal from "./ConfirmModal";
 import { submitQuizResult } from "../api/quizApi";
+import axios from "axios";
 
 export default function QuizRunner({ quiz, onBack }) {
 
   const [answers, setAnswers] = useState(Array(quiz.questions.length).fill(null));
+
+  const [showResult, setShowResult] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [shareCode, setShareCode] = useState(null);
+  const [saveError, setSaveError] = useState("");
+
   const [page, setPage] = useState(0);
   const [showSelectMsg, setShowSelectMsg] = useState(false);
   const shakeRef = useRef();
@@ -21,36 +28,81 @@ export default function QuizRunner({ quiz, onBack }) {
     setShowSelectMsg(false);
   }, [page]);
 
-  const handleFinalSubmit = async () => {
-    const quizJson = JSON.stringify(quiz);
-    const userAnswersJson = JSON.stringify(answers);
-    const correctAnswersJson = JSON.stringify(quiz.questions.map(q => q.correctOptionIndex));
-    const score = answers.reduce((s, a, i) => a === quiz.questions[i].correctOptionIndex ? s + 1 : s, 0);
+  const doSave = async () => {
 
-    const payload = {
-      quizJson,
-      userAnswersJson,
-      score,
-      totalQuestions: quiz.questions.length,
-      correctAnswersJson,
-    };
+    setSaving(true);
+    setSaveError("");
 
     try {
-      const result = await submitQuizResult(payload); // { shareCode: "abc", ... }
-      setSubmittedResult({ quiz, answers, shareCode: result.shareCode });
+
+      const score = answers.reduce((s, a, i) => a === quiz.questions[i].correctOptionIndex ? s + 1 : s, 0);
+      const payload = {
+        quizJson: JSON.stringify(quiz),
+        userAnswersJson: JSON.stringify(answers),
+        correctAnswersJson: JSON.stringify(quiz.questions.map(q => q.correctOptionIndex)),
+        score,
+        totalQuestions: quiz.questions.length,
+      };
+
+      const saved = await submitQuizResult(payload); // may throw if backend is down/500
+      setShareCode(saved.shareCode);
+
     } catch (e) {
-      alert("Failed to submit result!");
+      // Build a specific, user-facing error
+      let msg = "Failed to generate share link.";
+      if (axios.isAxiosError(e)) {
+        const status = e.response?.status;
+        if (!e.response) {
+          // Network error, ECONNREFUSED, CORS, server offline
+          msg += " The server is unreachable.";
+        } else if (status >= 500) {
+          msg += ` Server error (${status}).`;
+        } else if (status === 429) {
+          msg += " Rate limit exceeded. Try again later.";
+        } else if (status >= 400) {
+          msg += ` Request failed (${status}).`;
+        }
+        if (e.response?.data?.message) {
+          msg += ` ${e.response.data.message}`;
+        }
+      } else if (e instanceof Error && e.message) {
+        msg += ` ${e.message}`;
+      }
+      msg += " You can retry.";
+
+      setSaveError(msg);
+      setShareCode(null); // ensure we stay in 'no link' state
+      console.error(e);
+    }finally {
+      setSaving(false);
     }
+
   };
   
-  // Render
-  if (submittedResult){
+  const handleSubmit = async () => {
+    // Basic guard — you can keep your existing validation
+    if (answers.some(a => a == null)) {
+      // show your existing UX
+      return;
+    }
+   
+    setShowResult(true); // show local result immediately
+    setShareCode(null);  // ensure no URL yet
+    doSave();            // start saving in background
+
+  };
+
+  if (showResult) {
     return (
+      // when rendering the local result
       <QuizResult
-        quiz={submittedResult.quiz}
-        answers={submittedResult.answers}
-        shareCode={submittedResult.shareCode}
+        quiz={quiz}
+        answers={answers}
+        shareCode={shareCode}          // null until success
         onBack={onBack}
+        shareLoading={saving}          // shows skeleton while waiting
+        shareError={saveError}         // shows error + retry when failed
+        onShareRetry={doSave}          // retry handler
       />
     );
   }
@@ -168,7 +220,7 @@ export default function QuizRunner({ quiz, onBack }) {
               onConfirm={() => {
                 setConfirmOpen(false);
 //                setSubmitted(true);
-                handleFinalSubmit();
+                handleSubmit();
               }}
               onCancel={() => setConfirmOpen(false)}
             />

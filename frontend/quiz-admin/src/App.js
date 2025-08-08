@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AdminQuizPage from "./components/AdminQuizPage";
 import QuizListingPage from "./components/QuizListingPage";
 import LoginPage from "./components/LoginPage";
-import PublicQuizResultPage from "./components/result/PublicQuizResultPage";
+import QuizResultPublic from "./components/result/QuizResultPublic";
 import { AuthProvider, useAuth } from "./auth/AuthContext";
 import NotFoundPage from "./components/NotFoundPage";
 
@@ -31,7 +31,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
           
           {/* Public result page */}
-          <Route path="/quiz/result/:shareCode" element={<PublicQuizResultPage />} />
+          <Route path="/quiz/result/:shareCode" element={<QuizResultPublic />} />
 
         </Routes>
       </BrowserRouter>

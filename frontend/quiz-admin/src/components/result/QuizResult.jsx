@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import ThemeToggle from "../ToggleTheme";
 import QuizAnswerReview from "./QuizAnswerReview";
 import QuizFeedback from "./QuizFeedback";
-import QuizResultShare from "./QuizResultShare";
+import QuizResultShareBox from "./QuizResultShareBox";
 
-export default function QuizResult({ quiz, answers, shareCode, onBack }) {
+export default function QuizResult({
+  quiz,
+  answers,
+  shareCode,
+  onBack,
+  shareLoading = false,     // NEW
+  shareError = "",          // NEW
+  onShareRetry,             // NEW
+}) {
 
   const [showReview, setShowReview] = useState(false);
   
@@ -48,14 +56,15 @@ export default function QuizResult({ quiz, answers, shareCode, onBack }) {
             <QuizFeedback percent={percent} />
         </div>
         
-        <QuizResultShare shareUrl={shareUrl} />
-        
+        <QuizResultShareBox
+          shareUrl={shareUrl}
+          loading={!shareUrl && shareLoading}
+          error={shareError}
+          onRetry={onShareRetry}
+        />
+
         <button
-          className={`mt-4 px-6 py-2 rounded-xl font-semibold w-full transition ${
-            showReview
-              ? "quiz-btn-primary"
-              : "quiz-btn-primary"
-          }`}
+          className={`mt-4 px-6 py-2 rounded-xl font-semibold w-full transition quiz-btn-primary`}
           onClick={() => setShowReview((prev) => !prev)}
         >
           {showReview ? "Hide Answers & Explanation" : "Reveal Answers & Explanation"}
@@ -63,12 +72,12 @@ export default function QuizResult({ quiz, answers, shareCode, onBack }) {
 
         {showReview && <QuizAnswerReview quiz={quiz} answers={answers} />}
 
-        <button
-          className="mt-10 w-full quiz-btn-neutral"
-          onClick={onBack}
-        >
-          Back to Quiz List
-        </button>
+        {onBack && (
+          <button className="mt-10 w-full quiz-btn-neutral" onClick={onBack}>
+            Back to Quiz List
+          </button>
+        )}
+
       </div>
     </div>
   );
