@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import AdminQuizPage from "./components/AdminQuizPage";
+import AdminQuizPage from "./components/admin/AdminQuizPage";
 import QuizListingPage from "./components/QuizListingPage";
 import LoginPage from "./components/LoginPage";
 import QuizResultPublic from "./components/result/QuizResultPublic";
@@ -12,6 +12,7 @@ function RequireAuth({ children }) {
   const { user } = useAuth();
   return user ? children : <Navigate to="/login" replace />;
 }
+
 
 function App() {
   return (

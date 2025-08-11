@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { fetchQuizzes, createQuiz, updateQuiz, deleteQuiz } from "../api/quizApi";
-import QuizList from "./QuizList";
-import QuizForm from "./QuizForm";
-import ThemeToggle from "./ToggleTheme";
+import { fetchQuizzes, createQuiz, updateQuiz, deleteQuiz } from "../../api/quizApi";
+import QuizList from "./AdminQuizList";
+import QuizForm from "./AdminQuizForm";
+import ThemeToggle from "../ToggleTheme";
+
 
 const emptyQuiz = { title: "", description: "", questions: [] };
 
@@ -27,10 +28,8 @@ function AdminQuizPage() {
   };
 
   const handleDeleteQuiz = async (id) => {
-    if (window.confirm("Delete this quiz?")) {
-      await deleteQuiz(id);
-      setQuizzes(await fetchQuizzes());
-    }
+    await deleteQuiz(id);
+    setQuizzes(await fetchQuizzes());
   };
 
   const handleFormSubmit = async (quiz) => {
@@ -49,26 +48,25 @@ function AdminQuizPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black py-10 px-2 sm:px-8 transition">
-
-      <div className="w-full max-w-screen-lg mx-auto">
-        <header className="flex items-center justify-between mb-8">
+    <div className="min-h-screen quiz-bg quiz-text py-10 px-4">
+      <div className="quiz-layout">
+        <header className="quiz-flex mb-8">
           
-          <a href="/" className="text-3xl font-extrabold tracking-tight text-neutral-800 dark:text-neutral-100 focus:outline-none">
+          <a href="/" className="text-3xl font-extrabold tracking-tight quiz-title focus:outline-none">
             Quiz Admin
           </a>
 
           <ThemeToggle />
           {!showForm && (
             <button
-              className="ml-2 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl shadow-md transition"
+              className="ml-2 flex items-center gap-2 quiz-btn-primary"
               onClick={handleAddQuiz}
               title="Add new quiz"
             >+ New Quiz</button>
           )}
         </header>
         {error && (
-          <div className="mb-6 p-3 bg-red-100 text-red-700 dark:bg-red-800 dark:text-red-200 rounded-lg border border-red-300 text-sm">{error}</div>
+          <div className="mb-6 p-3 quiz-error-box">{error}</div>
         )}
         {!showForm ? (
           <QuizList quizzes={quizzes} onEdit={handleEditQuiz} onDelete={handleDeleteQuiz} />
