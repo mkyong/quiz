@@ -4,6 +4,7 @@ export async function fetchQuizzes() {
   const res = await axios.get("/api/quizzes");
   return res.data;
 }
+
 export async function createQuiz(quiz) {
   return axios.post("/api/quizzes", quiz);
 }

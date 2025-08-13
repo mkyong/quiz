@@ -31,7 +31,7 @@ function ThemeToggle() {
         aria-label="Toggle theme"
         onClick={() => setDark(d => !d)}
         className="
-            ml-auto p-2 rounded-xl transition
+            ml-auto p-2 rounded-xl transition cursor-pointer
             bg-neutral-200 dark:bg-neutral-700
             hover:bg-neutral-300 dark:hover:bg-neutral-600
             flex items-center justify-center

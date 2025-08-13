@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AdminQuizPage from "./components/admin/AdminQuizPage";
 import QuizListingPage from "./components/QuizListingPage";
@@ -6,13 +7,10 @@ import QuizResultPublic from "./components/result/QuizResultPublic";
 import { AuthProvider, useAuth } from "./auth/AuthContext";
 import NotFoundPage from "./components/NotFoundPage";
 
-import './styles/utilities.css';
-
 function RequireAuth({ children }) {
   const { user } = useAuth();
   return user ? children : <Navigate to="/login" replace />;
 }
-
 
 function App() {
   return (
