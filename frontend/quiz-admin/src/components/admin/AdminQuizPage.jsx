@@ -4,7 +4,6 @@ import QuizList from "./AdminQuizList";
 import QuizForm from "./AdminQuizForm";
 import ThemeToggle from "../ToggleTheme";
 
-
 const emptyQuiz = { title: "", description: "", questions: [] };
 
 function AdminQuizPage() {
@@ -57,6 +56,7 @@ function AdminQuizPage() {
           </a>
 
           <ThemeToggle />
+
           {!showForm && (
             <button
               className="ml-2 flex items-center gap-2 quiz-btn-primary"
@@ -64,6 +64,7 @@ function AdminQuizPage() {
               title="Add new quiz"
             >+ New Quiz</button>
           )}
+          
         </header>
         {error && (
           <div className="mb-6 p-3 quiz-error-box">{error}</div>

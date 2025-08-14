@@ -81,7 +81,7 @@ function QuestionEditor({ number, question, setQuestion, onRemove }) {
         </div>
 
         <textarea
-          className="quiz-textarea min-h-[200px] mb-4"
+          className="quiz-input quiz-textarea min-h-[200px] mb-4"
           value={question.text}
           onChange={handleTextChange}
           required
@@ -110,7 +110,7 @@ function QuestionEditor({ number, question, setQuestion, onRemove }) {
 
         <div className="quiz-muted mb-2">Explanation</div>
         <textarea
-          className="quiz-textarea min-h-[140px]"
+          className="quiz-input quiz-textarea min-h-[140px]"
           value={question.correctOptionExplain}
           onChange={handleExplainChange}
           required

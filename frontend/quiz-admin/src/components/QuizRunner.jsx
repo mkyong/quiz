@@ -5,7 +5,7 @@ import QuizResult from "./result/QuizResult";
 import WarningMessage from "./WarningBox";
 import ConfirmModal from "./ConfirmModal";
 import { submitQuizResult } from "../api/quizApi";
-import axios from "axios";
+import BackToSelectionButton from "./BackToSelectionButton";
 
 export default function QuizRunner({ quiz, onBack }) {
 
@@ -21,8 +21,6 @@ export default function QuizRunner({ quiz, onBack }) {
   const shakeRef = useRef();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const currentQuestion = quiz.questions[page];
-
-  const [submittedResult, setSubmittedResult] = useState(null);
 
   useEffect(() => {
     setShowSelectMsg(false);
@@ -48,32 +46,21 @@ export default function QuizRunner({ quiz, onBack }) {
       setShareCode(saved.shareCode);
 
     } catch (e) {
-      // Build a specific, user-facing error
+      
       let msg = "Failed to generate share link.";
-      if (axios.isAxiosError(e)) {
-        const status = e.response?.status;
-        if (!e.response) {
-          // Network error, ECONNREFUSED, CORS, server offline
-          msg += " The server is unreachable.";
-        } else if (status >= 500) {
-          msg += ` Server error (${status}).`;
-        } else if (status === 429) {
-          msg += " Rate limit exceeded. Try again later.";
-        } else if (status >= 400) {
-          msg += ` Request failed (${status}).`;
-        }
-        if (e.response?.data?.message) {
-          msg += ` ${e.response.data.message}`;
-        }
-      } else if (e instanceof Error && e.message) {
-        msg += ` ${e.message}`;
+      if (e instanceof ApiError) {
+        if (e.code === "NETWORK") msg += " The server is unreachable.";
+        else if (e.status >= 500) msg += ` Server error (${e.status}).`;
+        else if (e.status === 429) msg += " Rate limit exceeded. Try again later.";
+        else if (e.status >= 400) msg += ` Request failed (${e.status}).`;
+        if (e.message) msg += ` ${e.message}`;
       }
       msg += " You can retry.";
-
+      
       setSaveError(msg);
       setShareCode(null); // ensure we stay in 'no link' state
       console.error(e);
-    }finally {
+    } finally {
       setSaving(false);
     }
 
@@ -111,7 +98,7 @@ export default function QuizRunner({ quiz, onBack }) {
     <div className="min-h-screen quiz-bg quiz-text py-10 px-4">
       <div className="quiz-layout">
         <header className="quiz-flex mb-8">
-          <button onClick={onBack} className="quiz-btn-primary">&larr; Back To Quiz Selection</button>
+          <BackToSelectionButton onBack={onBack} />
           <ThemeToggle />
         </header>
         <div className="mb-3 quiz-muted">

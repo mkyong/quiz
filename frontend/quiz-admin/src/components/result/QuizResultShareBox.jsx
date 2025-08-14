@@ -121,7 +121,7 @@ export default function QuizShareResult({ shareUrl, loading = false, error = "",
           className="
             flex items-center gap-2 rounded px-2 py-2 font-semibold transition
             bg-neutral-200 dark:bg-neutral-700 text-blue-700 dark:text-blue-200
-            hover:bg-neutral-300 dark:hover:bg-neutral-600 shadow-sm
+            hover:bg-neutral-300 dark:hover:bg-neutral-600 shadow-sm cursor-pointer
           "
           title="Copy link"
           onClick={handleCopy}

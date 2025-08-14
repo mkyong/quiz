@@ -30,19 +30,11 @@ export default function QuizResult({
   return (
     <div className="min-h-screen quiz-bg quiz-text py-10 px-4">
       <div className="quiz-layout">
-        <header className="quiz-flex">
-          <button
-            onClick={onBack}
-            className="quiz-btn-neutral mb-10"
-            aria-label="Back to quiz"
-          >
-            &larr; Back To Quiz Selection
-          </button>
-          <ThemeToggle />
-        </header>
-        <h2 className="quiz-title mb-8">
-          {quiz.title} Results
-        </h2>
+        <header className="quiz-flex mb-6">
+            <a href="/quiz" className="quiz-btn-neutral">&larr; Back to Quiz List</a>
+            <ThemeToggle />
+          </header>
+        <h2 className="quiz-title mb-8">Result: {quiz.title}</h2>
         
         <div className="quiz-box mb-4">
             <div className="">
@@ -64,7 +56,7 @@ export default function QuizResult({
         />
 
         <button
-          className={`mt-4 px-6 py-2 rounded-xl font-semibold w-full transition quiz-btn-primary`}
+          className={`mt-6 px-6 py-2 rounded-xl font-semibold w-full transition quiz-btn-primary`}
           onClick={() => setShowReview((prev) => !prev)}
         >
           {showReview ? "Hide Answers & Explanation" : "Reveal Answers & Explanation"}

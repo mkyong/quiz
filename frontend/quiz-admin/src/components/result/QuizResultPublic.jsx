@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import ThemeToggle from "../ToggleTheme";
+import QuizFeedback from "./QuizFeedback";
 import MarkdownRenderer from "../MarkdownRenderer";
 import QuizAnswerReview from "./QuizAnswerReview";
 import QuizResultShareBox from "./QuizResultShareBox";
@@ -123,14 +124,13 @@ export default function QuizResultPublic() {
           </header>
 
           <div className="quiz-error-box">
-            <div className="quiz-error-text mb-3">
+            <div className="quiz-error-text mb-4">
               {error || (parseFailed ? "Failed to parse shared result." : "Unable to load this shared result.")}
             </div>
             <div className="flex gap-2">
               <button className="quiz-btn-primary" onClick={() => load()}>
                 Retry
               </button>
-              <a href="/quiz" className="quiz-btn-neutral">Go to Quiz List</a>
             </div>
           </div>
         </div>
@@ -142,24 +142,24 @@ export default function QuizResultPublic() {
   return (
     <div className="min-h-screen quiz-bg quiz-text py-10 px-4">
       <div className="quiz-layout">
-        <header className="quiz-flex mb-8">
+        <header className="quiz-flex mb-6">
           <a href="/quiz" className="quiz-btn-neutral">&larr; Back to Quiz List</a>
           <ThemeToggle />
         </header>
 
-        <h2 className="quiz-title mb-4">{quiz.title} — Result</h2>
+        <h2 className="quiz-title mb-8">Result: {quiz.title}</h2>
 
-        <div className="quiz-box mb-6">
-          <div>
-            <span className="font-semibold">{correctCount}</span> of {total} correct
+        <div className="quiz-box mb-4">
+          <div className="">
+            Correct: {correctCount} of {total}
           </div>
-          <div className="quiz-title text-4xl pt-2 pb-2">
+          <div className="quiz-title text-4xl pt-4 pb-4">
             Score: {percent}%
           </div>
           
+          <QuizFeedback percent={percent} />
         </div>
 
-        {/* Reuse the Share Box */}
         <QuizResultShareBox
           shareUrl={shareUrl}
           loading={false}

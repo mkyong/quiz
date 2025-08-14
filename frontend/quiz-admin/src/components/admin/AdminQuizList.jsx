@@ -19,17 +19,17 @@ function QuizList({ quizzes, onEdit, onDelete }) {
     <>
       <section className="space-y-4">
         {quizzes.length === 0 && (
-          <div className="text-neutral-400 dark:text-neutral-400 text-center">
+          <div className="quiz-box p4">
             No quizzes found.
           </div>
         )}
         {quizzes.map((q) => (
           <div
             key={q.id}
-            className="quiz-flex quiz-box p-4 rounded-xl justify-between items-center"
+            className="quiz-box quiz-flex"
           >
             <div>
-              <div className="quiz-title mb-2">{q.title}</div>
+              <div className="quiz-title mb-4">{q.title}</div>
               <div className="quiz-description">{q.description}</div>
               <div className="quiz-muted">
                 {q.questions?.length ?? 0} questions

@@ -6,7 +6,7 @@ import MarkdownRenderer from "../MarkdownRenderer";
 export default function AnswerReview({ quiz, answers }) {
   return (
     <div className="mt-8 space-y-8">
-      <h3 className="quiz-title text-xl mb-2">
+      <h3 className="quiz-title text-xl mb-4">
         Answer Review & Explanation
       </h3>
       {quiz.questions.map((q, i) => (
@@ -89,7 +89,6 @@ export default function AnswerReview({ quiz, answers }) {
                 textAlign: "left",
               }}
             >
-              <b>Explanation:</b>{" "}
               <div className="mt-2">
                 <MarkdownRenderer>{q.correctOptionExplain}</MarkdownRenderer>
               </div>

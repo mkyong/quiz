@@ -50,7 +50,7 @@ export default function QuizUserPage() {
         </header>
 
         <h1 className="text-xl font-bold mb-4">Select a Quiz to Start</h1>
-        <ErrorBox message={error} onDismiss={() => setError("")} />
+        <ErrorBox message={error} />
 
         {quizzes.length === 0 ? (
           <div className="quiz-muted">No quizzes available.</div>

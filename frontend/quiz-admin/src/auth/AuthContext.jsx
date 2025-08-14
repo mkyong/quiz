@@ -4,12 +4,20 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  /*const [user, setUser] = useState(null);
 
   useEffect(() => {
     const u = localStorage.getItem("quizUser");
     if (u) setUser(JSON.parse(u));
-  }, []);
+  }, []);*/
+
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("quizUser") || "null");
+    } catch {
+      return null;
+    }
+  });
 
   async function login(username, password) {
     try {
