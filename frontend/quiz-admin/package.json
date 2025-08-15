@@ -1,7 +1,6 @@
 {
-  "proxy": "http://localhost:8080",
-  "name": "quiz-admin",
-  "version": "0.1.0",
+  "name": "quiz",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -11,11 +10,9 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.11.0",
-    "chart.js": "^4.5.0",
     "lucide-react": "^0.536.0",
-    "react": "^19.1.1",
-    "react-chartjs-2": "^5.3.0",
-    "react-dom": "^19.1.1",
+    "react": ">=18 <20",
+    "react-dom": ">=18 <20",
     "react-icons": "^5.5.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.7.1",
@@ -25,7 +22,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:lib": "vite build -c vite.lib.config.js",
+    "build:widget": "vite build -c vite.widget.config.js",
+    "build:css": "tailwindcss -i ./src/styles/styles.css -o ./dist/quiz-widget.css --minify"
+  },
+  "peerDependencies": {
+    "react": ">=18 <20",
+    "react-dom": ">=18 <20"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +52,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.11",
     "@vitejs/plugin-react": "^5.0.0",
+    "rollup-plugin-visualizer": "^6.0.3",
     "tailwindcss": "^4.1.11",
     "vite": "^7.1.2"
   }

@@ -5,6 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 // Adjust target if your backend runs elsewhere
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: '/',            // change to '/quiz/' if served under subpath
   server: {
     port: 3000, // CRA default was 3000
     proxy: {

@@ -52,14 +52,7 @@ export default function ConfirmDialog({ state, onClose }) {
               {state.title}
             </h2>
           </div>
-          <button
-            className="quiz-icon-btn"
-            aria-label="Close"
-            onClick={() => onClose(false)}
-            title="Close"
-          >
-            <FaTimes />
-          </button>
+          
         </div>
 
         {/* Body */}
